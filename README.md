@@ -1,3 +1,28 @@
+# film-freak-web-ui
+
+This project was initialized using create-react-app with Typescript template.
+
+## Create development certificates
+
+Easy way to create development certificates is mkcert
+
+    mkcert localhost.localdomain localhost 127.0.0.1 
+
+This creates a certificate file and a key file:
+* localhost+2-key.pem  
+* localhost+2.pem 
+
+Path to these files can be set in star script in package.json:
+```json
+    "scripts": {
+      "start": "HTTPS=true SSL_CRT_FILE=localhost+1.pem SSL_KEY_FILE=localhost+1-key.pem react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject"
+    }
+```
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
