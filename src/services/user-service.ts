@@ -10,17 +10,13 @@ export async function getUser(token: string) : Promise<UserResponse> {
     console.log(token)
     const options: RequestInit = {
         method: 'GET',
-        // TODO: onko tarpeen?
-        mode: 'cors',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=UTF-8',
             'Authorization': `Bearer ${token}`
         },
-        // TODO: onko tarpeen
-        credentials: 'include',
     };
-    const url = `${process.env.REACT_APP_API_URL}user`
+    const url = `${process.env.REACT_APP_API_URL}/user`
     const response = await fetch(url, options);
     const status = response.status;
 

@@ -11,7 +11,6 @@ export interface LoginResponse extends ResponseModel {
 export async function logIn(userName: string, password: string) : Promise<LoginResponse> {
     const options: RequestInit = {
         method: 'POST',
-        mode: 'cors',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=UTF-8'
@@ -20,10 +19,8 @@ export async function logIn(userName: string, password: string) : Promise<LoginR
             userName,
             password
         }),
-        credentials: 'include'
-
     };
-    const url = `${process.env.REACT_APP_API_URL}login`
+    const url = `${process.env.REACT_APP_API_URL}/login`
     const response = await fetch(url, options);
     const status = response.status;
 
