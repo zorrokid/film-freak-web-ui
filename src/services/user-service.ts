@@ -22,7 +22,6 @@ export async function getUser(token: string) : Promise<UserResponse> {
 
     if (response.ok){
         const user: User = await response.json();
-        console.log(JSON.stringify(user))
         return {
             status,
             user 
