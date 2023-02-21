@@ -1,7 +1,6 @@
-import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { LoginForm } from './features/login-form/login-form';
+import { LoginForm } from './features/login/loginForm';
 
 function App() {
   return (
