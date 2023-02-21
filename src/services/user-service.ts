@@ -7,7 +7,6 @@ export interface UserResponse extends ResponseModel
 }
 
 export async function getUser(token: string) : Promise<UserResponse> {
-    console.log(token)
     const options: RequestInit = {
         method: 'GET',
         headers: {
