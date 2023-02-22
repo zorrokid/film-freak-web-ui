@@ -21,7 +21,15 @@ Path to these files can be set in star script in package.json:
       "eject": "react-scripts eject"
     }
 ```
+# To use with Docker container
 
+Build Docker image
+
+    docker build . -t film-freak-web-ui
+
+Run Docker image
+
+    docker run -p 3000:3000 -d film-freak-web-ui
 
 # Getting Started with Create React App
 
