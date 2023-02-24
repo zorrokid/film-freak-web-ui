@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../models/user';
 import { logIn, TokenModel } from '../../services/loginService';
 import { getUser } from '../../services/userService';
+import { getValue, getObject, storeValue, storeObject, removeItem } from '../../services/storageService';
 
 enum LoginStatus {
     loading,
@@ -10,15 +11,15 @@ enum LoginStatus {
 }
 
 export interface LoginState {
-    token: string;
-    expiration: Date;
+    token: string | undefined;
+    expiration: Date | undefined;
     user?: User;
     status: LoginStatus;
 }
 
 const initialState: LoginState = {
-    token: '',
-    expiration: new Date(),
+    token: getValue("token") ?? undefined,
+    expiration: getObject<Date>("expiration") ?? undefined,
     status: LoginStatus.idle,
 }
 
@@ -34,6 +35,8 @@ export const logInAsync = createAsyncThunk<TokenModel, LoginParams>(
         if (loginResponse.status !== 200 || loginResponse.tokenModel === undefined) {
             return thunkApi.rejectWithValue("Log in failed");
         }
+        storeValue('token', loginResponse.tokenModel.token);
+        storeObject('expiration', loginResponse.tokenModel.expiration);
         return loginResponse.tokenModel;
     }
 )
@@ -49,6 +52,14 @@ export const getUserAsync = createAsyncThunk<User, string>(
     }
 )
 
+export const logOutAsync = createAsyncThunk(
+    'login/logout',
+    async () => {
+        removeItem("token");
+        removeItem("expiration");
+    }
+)
+
 export const loginSlice = createSlice({
     name: 'login',
     initialState,
@@ -58,15 +69,15 @@ export const loginSlice = createSlice({
             state.expiration = action.payload.expiration;
         },
         clearToken: (state) => {
-            state.token = '';
-            state.expiration = new Date();
+            state.token = undefined;
+            state.expiration = undefined;
         },
         setUser: (state, action: PayloadAction<User>) => {
             state.user = action.payload;
         },
         clearUser: (state) => {
             state.user = undefined;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(logInAsync.pending, (state) => {
@@ -98,8 +109,13 @@ export const loginSlice = createSlice({
             state.status = LoginStatus.idle;
             state.user = undefined;
         });
+        builder.addCase(logOutAsync.fulfilled, (state) => {
+            state.status = LoginStatus.idle;
+            state.user = undefined;
+            state.token = undefined;
+            state.expiration = undefined;
+        })
     }
-
 })
 
 export const { setToken, clearToken, setUser, clearUser } = loginSlice.actions;

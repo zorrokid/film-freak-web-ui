@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
-import { getUserAsync, logInAsync } from "./loginSlice";
+import { getUserAsync, logInAsync, logOutAsync } from "./loginSlice";
 
 interface LoginFormProps {
 
@@ -16,16 +16,24 @@ export const LoginForm: React.FC<LoginFormProps> = props => {
     const [password, setPassword] = useState("");
 
     useEffect(() => {
-        dispatch(getUserAsync(token));
+        if (token) dispatch(getUserAsync(token));
     }, [token]);
 
     const submit = async (event: any) => {
         event.preventDefault();
         dispatch(logInAsync({ userName, password }));
     }
+
+    const logout = async (event: any) => {
+        dispatch(logOutAsync())
+    }
     return (
         user
-            ? <span>{user.userName}</span>
+            ? <>
+                <span>{user.userName}</span>
+                &nbsp;
+                <button onClick={logout}>Log out</button>
+            </>
             : <form onSubmit={submit}>
                 <label>User name:
                     <input type="text"
