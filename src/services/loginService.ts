@@ -1,15 +1,17 @@
+import axios from "axios";
 import { ResponseModel } from "../models/response";
 export interface TokenModel {
     token: string,
-    expiration: Date
+    expiration: string,
+    refreshToken: string,
 }
 
 export interface LoginResponse extends ResponseModel {
     tokenModel?: TokenModel;
 }
 
-export async function logIn(userName: string, password: string) : Promise<LoginResponse> {
-    const options: RequestInit = {
+export async function logIn(userName: string, password: string): Promise<LoginResponse> {
+    /*const options: RequestInit = {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -19,18 +21,20 @@ export async function logIn(userName: string, password: string) : Promise<LoginR
             userName,
             password
         }),
-    };
+    };*/
     const url = `${process.env.REACT_APP_API_URL}/login`
-    const response = await fetch(url, options);
+    //const response = await fetch(url, options);
+    const response = await axios.post<TokenModel>(url, { userName, password });
     const status = response.status;
 
-    if (response.ok){
-        const tokenModel = await response.json();
+    if (response.status === 200) {
+        const tokenModel = response.data;
+
         return {
             status,
             tokenModel
         }
-    } 
+    }
 
     return { status };
 }

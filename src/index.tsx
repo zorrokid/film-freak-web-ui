@@ -5,10 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import { initAxios } from './interceptors/jwtInterceptor';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+initAxios(store);
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
