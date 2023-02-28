@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
 import { getUserAsync, logInAsync, logOutAsync } from "./loginSlice";
 
-interface LoginFormProps {
-
-}
+interface LoginFormProps { }
 
 export const LoginForm: React.FC<LoginFormProps> = props => {
     const dispatch = useDispatch<AppDispatch>();

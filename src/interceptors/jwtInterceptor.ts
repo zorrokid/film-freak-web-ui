@@ -15,9 +15,7 @@ export function initAxios(_store: StoreType) {
 
         const currentState = store.getState();
         let accessToken = currentState.login.token;
-
         request.headers.Authorization = `Bearer ${accessToken}`
-
         return request;
     });
 
