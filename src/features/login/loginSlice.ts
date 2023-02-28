@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../models/user';
 import { logIn, TokenModel } from '../../services/loginService';
 import { getUser } from '../../services/userService';
-import { getValue, getObject, storeValue, storeObject, removeItem } from '../../services/storageService';
+import { getValue, storeValue, removeItem } from '../../services/storageService';
 import { JWT_TOKEN_EXPIRATION_KEY, JWT_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../../consts/localStorageKeys';
 
 enum LoginStatus {
@@ -15,7 +15,6 @@ export enum TokenRefreshStatus {
     processing,
     idle
 }
-
 
 export interface LoginState {
     token: string | undefined;
@@ -46,9 +45,7 @@ export const logInAsync = createAsyncThunk<TokenModel, LoginParams>(
         if (loginResponse.status !== 200 || loginResponse.tokenModel === undefined) {
             return thunkApi.rejectWithValue("Log in failed");
         }
-        storeValue(JWT_TOKEN_KEY, loginResponse.tokenModel.token);
-        storeValue(JWT_TOKEN_EXPIRATION_KEY, loginResponse.tokenModel.expiration);
-        storeValue(REFRESH_TOKEN_KEY, loginResponse.tokenModel.refreshToken);
+        thunkApi.dispatch(setTokenAsync(loginResponse.tokenModel))
         return loginResponse.tokenModel;
     }
 )
@@ -61,6 +58,16 @@ export const getUserAsync = createAsyncThunk<User, string>(
             return thunkApi.rejectWithValue("Fetching user failed");
         }
         return userResponse.user;
+    }
+)
+
+export const setTokenAsync = createAsyncThunk<TokenModel, TokenModel>(
+    'login/setTokenAsync',
+    async (tokenModel: TokenModel) => {
+        storeValue(JWT_TOKEN_KEY, tokenModel.token);
+        storeValue(JWT_TOKEN_EXPIRATION_KEY, tokenModel.expiration);
+        storeValue(REFRESH_TOKEN_KEY, tokenModel.refreshToken);
+        return tokenModel;
     }
 )
 
@@ -77,11 +84,6 @@ export const loginSlice = createSlice({
     name: 'login',
     initialState,
     reducers: {
-        setToken: (state, action: PayloadAction<TokenModel>) => {
-            state.token = action.payload.token;
-            state.expiration = action.payload.expiration;
-            state.refreshToken = action.payload.refreshToken;
-        },
         clearToken: (state) => {
             state.token = undefined;
             state.expiration = undefined;
@@ -104,16 +106,6 @@ export const loginSlice = createSlice({
         });
         builder.addCase(logInAsync.fulfilled, (state, { payload }) => {
             state.status = LoginStatus.idle;
-            if (payload) {
-                state.token = payload.token;
-                state.expiration = payload.expiration;
-                state.refreshToken = payload.refreshToken;
-            } else {
-                state.token = undefined;
-                state.expiration = undefined;
-                state.refreshToken = undefined;
-                state.user = undefined;
-            }
         });
         builder.addCase(logInAsync.rejected, (state, { payload }) => {
             state.status = LoginStatus.idle;
@@ -139,9 +131,14 @@ export const loginSlice = createSlice({
             state.token = undefined;
             state.expiration = undefined;
             state.refreshToken = undefined;
+        });
+        builder.addCase(setTokenAsync.fulfilled, (state, { payload }) => {
+            state.token = payload.token;
+            state.expiration = payload.expiration;
+            state.refreshToken = payload.refreshToken;
         })
     }
 })
 
-export const { setToken, clearToken, setUser, clearUser, setTokenRefreshStatus } = loginSlice.actions;
+export const { setUser, clearUser, setTokenRefreshStatus } = loginSlice.actions;
 export default loginSlice.reducer;

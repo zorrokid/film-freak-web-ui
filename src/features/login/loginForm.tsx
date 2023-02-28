@@ -16,8 +16,10 @@ export const LoginForm: React.FC<LoginFormProps> = props => {
     const [password, setPassword] = useState("");
 
     useEffect(() => {
-        if (token) dispatch(getUserAsync(token));
-    }, [token]);
+        if (token && !user) {
+            dispatch(getUserAsync(token));
+        }
+    }, [token, user]);
 
     const submit = async (event: any) => {
         event.preventDefault();
