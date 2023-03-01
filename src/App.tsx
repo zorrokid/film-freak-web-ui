@@ -1,11 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import { LoginForm } from './features/login/loginForm';
 
 function App() {
   return (
     <div className="App">
-      <LoginForm />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

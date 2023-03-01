@@ -1,6 +1,6 @@
 import axios from "axios";
 import { StoreType } from "../app/store";
-import { logOutAsync, setTokenAsync, setTokenRefreshStatus, TokenRefreshStatus } from "../features/login/loginSlice";
+import { logOutAsync, setTokenAsync, setTokenRefreshStatus, TokenRefreshStatus } from "../routes/login/loginSlice";
 import { TokenModel } from "../services/loginService";
 
 let store: StoreType;

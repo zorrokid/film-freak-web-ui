@@ -1,22 +1,49 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import { initAxios } from './interceptors/jwtInterceptor';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Root } from './routes/root';
+import { ErrorPage } from './ErrorPage';
+import { LoginForm } from './routes/login/LoginForm';
+import { Index } from './routes/index/index';
+import { Users } from './routes/users/Users';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <Index />,
+      },
+      {
+        path: 'login',
+        element: <LoginForm />,
+      },
+      {
+        path: 'users',
+        element: <Users />
+      }
+    ]
+
+  },
+]);
 
 initAxios(store);
 
 root.render(
   //<React.StrictMode>
   <Provider store={store}>
-    <App />
+    <RouterProvider router={router} />
   </Provider>
   //</React.StrictMode>
 );
