@@ -33,8 +33,7 @@ export const addUserAsync = createAsyncThunk<UserListModel, UserAddModel, { reje
 
         const res = await addUser(user);
         if (res === undefined) return thunkApi.rejectWithValue(["Add user response was undefined."]);
-        if (res.status === 400) {
-            console.log(res.errors)
+        if (res.status >= 400) {
             return thunkApi.rejectWithValue(res.errors);
         }
         const listModel: UserListModel = {

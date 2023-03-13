@@ -52,6 +52,12 @@ export const addUser = async (user: UserAddModel): Promise<AddUserResult | undef
                     errors
                 };
             }
+            if (status === 409) {
+                return {
+                    status,
+                    errors: ["User already exists."],
+                }
+            }
         });
     return response;
 }
