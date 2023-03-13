@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
+import { useRedirect } from "../../hooks/useRedirect";
 import { UserRoleSelect } from "./UserRoleSelect";
 import { addUserAsync } from "./usersSlice";
 
@@ -11,6 +12,7 @@ export interface UserFormProps {
 export const UserForm: React.FC = (props: UserFormProps) => {
     const errors = useSelector((state: RootState) => state.users.errors);
     const dispatch = useDispatch<AppDispatch>();
+    useRedirect();
     const [role, setRole] = useState("");
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");

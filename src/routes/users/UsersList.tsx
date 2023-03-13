@@ -3,7 +3,6 @@ import { AppDispatch, RootState } from "../../app/store";
 import { UserRoleSelect } from "./UserRoleSelect";
 import { getUsersAsync } from "./usersSlice";
 
-
 export const UsersList: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const users = useSelector((state: RootState) => state.users.users);
@@ -17,7 +16,7 @@ export const UsersList: React.FC = () => {
             <ul>
                 {
                     users.map((u, i) =>
-                        <li key={u.userId}>{u.userName}</li>
+                        <li key={`${i}_${u.userId}`}>{u.userName}</li>
                     )
                 }
             </ul>

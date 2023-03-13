@@ -7,7 +7,7 @@ export interface UserRoleSelectProps {
 
 export const UserRoleSelect: React.FC<UserRoleSelectProps> = ({ onSelect }) => {
     return (
-        <select onSelect={onSelect}>
+        <select onChange={onSelect} >
             {
                 roles.map((r, i) =>
                     <option value={r} key={`${i}${r}`}>{r}</option>

@@ -24,16 +24,14 @@ export interface ErrorResponse {
 
 const usersUrl = `${process.env.REACT_APP_API_URL}/users`;
 export const getUsers = async (role: string): Promise<UsersResponse> => {
-    const response = await axios.get(usersUrl, {
-        params: { role }
-    });
+    const response = await axios.get(`${usersUrl}/${role}`);
     return {
         status: response.status,
         users: response.data,
     }
 }
 
-export const addUser = async (user: UserAddModel): Promise<AddUserResult | undefined> => {
+export const postAddUserAsync = async (user: UserAddModel): Promise<AddUserResult | undefined> => {
     var response = axios.post<AddUserResponse | ErrorResponse[]>(usersUrl, user)
         .then((response) => {
             return {

@@ -1,8 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserAddModel } from "../../models/userAddModel";
 import { LoadingStatus } from "../../models/enums";
-import { addUser, getUsers } from "./usersService";
+import { postAddUserAsync, getUsers } from "./usersService";
 import { UserListModel } from "../../models/userListModel";
+import { setRoute } from "../../app/appSlice";
 
 export interface UsersState {
     users: UserListModel[];
@@ -31,7 +32,7 @@ export const addUserAsync = createAsyncThunk<UserListModel, UserAddModel, { reje
     'users/addUserAsync',
     async (user: UserAddModel, thunkApi) => {
 
-        const res = await addUser(user);
+        const res = await postAddUserAsync(user);
         if (res === undefined) return thunkApi.rejectWithValue(["Add user response was undefined."]);
         if (res.status >= 400) {
             return thunkApi.rejectWithValue(res.errors);
@@ -42,6 +43,9 @@ export const addUserAsync = createAsyncThunk<UserListModel, UserAddModel, { reje
             role: user.role,
         };
 
+        thunkApi.dispatch(addUser(listModel));
+        thunkApi.dispatch(setRoute('/users'))
+
         return listModel;
     }
 )
@@ -49,7 +53,11 @@ export const addUserAsync = createAsyncThunk<UserListModel, UserAddModel, { reje
 export const usersSlice = createSlice({
     name: 'users',
     initialState,
-    reducers: {},
+    reducers: {
+        addUser: (state, action: PayloadAction<UserListModel>) => {
+            state.users.push(action.payload);
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(getUsersAsync.pending, (state) => {
             state.status = LoadingStatus.loading;
@@ -67,14 +75,13 @@ export const usersSlice = createSlice({
         });
         builder.addCase(addUserAsync.rejected, (state, { payload }) => {
             state.status = LoadingStatus.idle;
-            console.log("payload", payload)
             state.errors = payload ?? [];
         });
         builder.addCase(addUserAsync.fulfilled, (state, { payload }) => {
             state.status = LoadingStatus.idle;
-            state.users.push(payload);
         });
     },
 })
 
+export const { addUser } = usersSlice.actions;
 export default usersSlice.reducer;
