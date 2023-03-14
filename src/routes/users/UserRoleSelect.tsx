@@ -2,12 +2,13 @@
 const roles = ['user', 'admin'];
 
 export interface UserRoleSelectProps {
-    onSelect: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    selected?: string;
+    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export const UserRoleSelect: React.FC<UserRoleSelectProps> = ({ onSelect }) => {
+export const UserRoleSelect: React.FC<UserRoleSelectProps> = ({ selected, onChange: onSelect }) => {
     return (
-        <select onChange={onSelect} >
+        <select onChange={onSelect} value={selected}>
             {
                 roles.map((r, i) =>
                     <option value={r} key={`${i}${r}`}>{r}</option>

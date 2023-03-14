@@ -35,7 +35,7 @@ export const UserForm: React.FC = (props: UserFormProps) => {
                 </ul>
             }
             <form onSubmit={submit}>
-                <UserRoleSelect onSelect={onSelect} />
+                <UserRoleSelect onChange={onSelect} />
                 <label>User name:
                     <input type="text"
                         value={userName}
