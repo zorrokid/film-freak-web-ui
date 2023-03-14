@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
@@ -9,7 +9,8 @@ import { Root } from './routes/root';
 import { ErrorPage } from './ErrorPage';
 import { LoginForm } from './routes/login/LoginForm';
 import { Index } from './routes/index/index';
-import { Users } from './routes/users/Users';
+import { UsersList } from './routes/users/UsersList';
+import { UserForm } from './routes/users/UserForm';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -31,8 +32,12 @@ const router = createBrowserRouter([
       },
       {
         path: 'users',
-        element: <Users />
-      }
+        element: <UsersList />
+      },
+      {
+        path: 'add-user',
+        element: <UserForm />
+      },
     ]
 
   },

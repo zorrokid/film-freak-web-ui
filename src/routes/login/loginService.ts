@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ResponseModel } from "../models/response";
+import { ResponseModel } from "../../models/response";
 export interface TokenModel {
     token: string,
     expiration: string,
@@ -14,7 +14,7 @@ export async function logIn(userName: string, password: string): Promise<LoginRe
     const url = `${process.env.REACT_APP_API_URL}/login`
     const response = await axios.post<TokenModel>(url, { userName, password });
     const status = response.status;
-    if (response.status === 200) {
+    if (status === 200) {
         const tokenModel = response.data;
         return {
             status,
