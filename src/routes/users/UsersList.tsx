@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
 import { UserRoleSelect } from "./UserRoleSelect";
 import { getUsersAsync } from "./usersSlice";
+import "./usersList.scss";
 
 export const UsersList: React.FC = () => {
     const [role, setRole] = useState<string>("user");
@@ -18,13 +19,17 @@ export const UsersList: React.FC = () => {
     return (
         <>
             <UserRoleSelect selected={role} onChange={onSetRole} />
-            <ul>
+            <div className="users-list__container">
                 {
                     users.map((u, i) =>
-                        <li key={`${i}_${u.userId}`}>{u.userName}</li>
+                        <div key={u.userId} className="users-list__row">
+                            <span className="users-list__column--name">{u.userName}</span>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </div>
                     )
                 }
-            </ul>
+            </div>
         </>
     );
 }

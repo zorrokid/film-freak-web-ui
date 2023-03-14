@@ -1,0 +1,15 @@
+.users-list__container {
+    width: 80%;
+}
+
+.users-list {
+    &__row {
+        display: flex;
+    }
+
+    &__column {
+        &--name {
+            width: 100px;
+        }
+    }
+}
