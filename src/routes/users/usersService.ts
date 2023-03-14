@@ -23,7 +23,7 @@ export interface ErrorResponse {
 }
 
 const usersUrl = `${process.env.REACT_APP_API_URL}/users`;
-export const getUsers = async (role: string): Promise<UsersResponse> => {
+const getUsers = async (role: string): Promise<UsersResponse> => {
     const response = await axios.get(`${usersUrl}/${role}`);
     return {
         status: response.status,
@@ -31,7 +31,7 @@ export const getUsers = async (role: string): Promise<UsersResponse> => {
     }
 }
 
-export const postAddUserAsync = async (user: UserAddModel): Promise<AddUserResult | undefined> => {
+const postAddUserAsync = async (user: UserAddModel): Promise<AddUserResult | undefined> => {
     var response = axios.post<AddUserResponse | ErrorResponse[]>(usersUrl, user)
         .then((response) => {
             return {
@@ -59,3 +59,9 @@ export const postAddUserAsync = async (user: UserAddModel): Promise<AddUserResul
         });
     return response;
 }
+
+const deleteUserAsync = async (userId: number) => {
+    const response = await axios.delete(`${usersUrl}/${userId}`);
+}
+
+export default { getUsers, postAddUserAsync, deleteUserAsync };

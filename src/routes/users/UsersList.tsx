@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
 import { UserRoleSelect } from "./UserRoleSelect";
-import { getUsersAsync } from "./usersSlice";
+import { deleteUserAsync, getUsersAsync } from "./usersSlice";
 import "./usersList.scss";
 
 export const UsersList: React.FC = () => {
@@ -16,6 +16,10 @@ export const UsersList: React.FC = () => {
         setRole(event.currentTarget.value);
         dispatch(getUsersAsync(role));
     }
+
+    const deleteUser = (userId: number) => {
+        dispatch(deleteUserAsync(userId));
+    }
     return (
         <>
             <UserRoleSelect selected={role} onChange={onSetRole} />
@@ -25,7 +29,7 @@ export const UsersList: React.FC = () => {
                         <div key={u.userId} className="users-list__row">
                             <span className="users-list__column--name">{u.userName}</span>
                             <button>Edit</button>
-                            <button>Delete</button>
+                            <button onClick={() => deleteUser(u.userId)}>Delete</button>
                         </div>
                     )
                 }

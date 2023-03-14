@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserAddModel } from "../../models/userAddModel";
 import { LoadingStatus } from "../../models/enums";
-import { postAddUserAsync, getUsers } from "./usersService";
+import usersService from "./usersService";
 import { UserListModel } from "../../models/userListModel";
 import { setRoute } from "../../app/appSlice";
 
@@ -20,7 +20,7 @@ const initialState: UsersState = {
 export const getUsersAsync = createAsyncThunk<UserListModel[], string, { rejectValue: string }>(
     'users/getUsersAsync',
     async (role: string, thunkApi) => {
-        const usersResponse = await getUsers(role);
+        const usersResponse = await usersService.getUsers(role);
         if (usersResponse.status !== 200 || !usersResponse.users) {
             return thunkApi.rejectWithValue("Fetching users failed");
         }
@@ -28,11 +28,15 @@ export const getUsersAsync = createAsyncThunk<UserListModel[], string, { rejectV
     }
 );
 
-export const addUserAsync = createAsyncThunk<UserListModel, UserAddModel, { rejectValue: string[] }>(
+export const addUserAsync = createAsyncThunk<
+    UserListModel,
+    UserAddModel,
+    { rejectValue: string[] }
+>(
     'users/addUserAsync',
     async (user: UserAddModel, thunkApi) => {
 
-        const res = await postAddUserAsync(user);
+        const res = await usersService.postAddUserAsync(user);
         if (res === undefined) return thunkApi.rejectWithValue(["Add user response was undefined."]);
         if (res.status >= 400) {
             return thunkApi.rejectWithValue(res.errors);
@@ -49,6 +53,14 @@ export const addUserAsync = createAsyncThunk<UserListModel, UserAddModel, { reje
         return listModel;
     }
 )
+
+export const deleteUserAsync = createAsyncThunk<number, number>(
+    'users/delete',
+    async (userId: number, thunkApi) => {
+        await usersService.deleteUserAsync(userId);
+        return userId;
+    }
+);
 
 export const usersSlice = createSlice({
     name: 'users',
@@ -80,6 +92,17 @@ export const usersSlice = createSlice({
         builder.addCase(addUserAsync.fulfilled, (state, { payload }) => {
             state.status = LoadingStatus.idle;
         });
+        builder.addCase(deleteUserAsync.pending, (state) => {
+            state.status = LoadingStatus.loading;
+        });
+        builder.addCase(deleteUserAsync.rejected, (state) => {
+            state.status = LoadingStatus.idle;
+        });
+        builder.addCase(deleteUserAsync.fulfilled, (state, { payload }) => {
+            state.status = LoadingStatus.idle;
+            state.users = state.users.filter(u => u.userId !== payload);
+        });
+
     },
 })
 
