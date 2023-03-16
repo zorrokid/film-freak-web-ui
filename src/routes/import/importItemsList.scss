@@ -1,0 +1,13 @@
+.import-items-list {
+    &__row {
+        display: flex;
+    }
+
+    &__column {
+        width: 150px;
+
+        &--id {
+            width: 50px;
+        }
+    }
+}
