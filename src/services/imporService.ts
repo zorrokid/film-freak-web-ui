@@ -5,7 +5,10 @@ export interface ImportItem {
     localName: string,
     mediaType: string,
     releaseCountry: string,
+    releaseId: string,
 }
+
+// TODO: this is custom for now - generalize!
 export function importFromFile(
     file: File,
     skipHeader: boolean,
@@ -18,24 +21,27 @@ export function importFromFile(
         const resultString = reader.result as string;
         if (!resultString) return;
         const rows = resultString.split('\n');
+        const prepareValue = (val: string) => val.trim();
         rows.forEach((value: string, index: number) => {
             if (index === 0 && skipHeader) {
                 return;
             }
             const fields = value.split('\t');
-            if (fields.length < 33) {
+            if (fields.length < 34) {
                 console.log('row should have 33 fields, was:', fields.length);
                 return;
             }
+            const externalIdPrimary = prepareValue(fields[22]);
+            const externalIdSecondary = prepareValue(fields[33]);
             const importItem: ImportItem = {
                 //isChecked: fields[0],
-                originalName: fields[1],
-                localName: fields[2],
+                originalName: prepareValue(fields[1]),
+                localName: prepareValue(fields[2]),
                 //year: fields[3],
                 //productionType: fields[4],
-                mediaType: fields[5],
+                mediaType: prepareValue(fields[5]),
                 //edition: fields[6],
-                releaseCountry: fields[7],
+                releaseCountry: prepareValue(fields[7]),
                 //caseType: fields[8],
                 //discs: fields[9],
                 //subEn: fields[10],
@@ -50,10 +56,10 @@ export function importFromFile(
                 //isRental: fields[19],
                 //hasSlipCover: fields[20],
                 //hasHologram: fields[21],
-                externalId: fields[22],
-                barcode: fields[23],
+                externalId: externalIdPrimary ? externalIdPrimary : externalIdSecondary,
+                barcode: prepareValue(fields[23]),
                 //imdbId: fields[24],
-                //releaseId: fields[25],
+                releaseId: prepareValue(fields[25]),
                 //series: fields[26],
                 //publisher: fields[27],
                 //studio: fields[28],
@@ -61,6 +67,13 @@ export function importFromFile(
                 //hasSceneList: fields[30],
                 //hasTwoSidedDisc: fields[31],
                 //hasTwoSidedCover: fields[32],
+            }
+            if (importItem.externalId === "") {
+                console.log('External id missing for row: ', index);
+                return;
+            }
+            if (importItem.barcode === "") {
+                console.log('No barcode for row: ', index);
             }
             importItems.push(importItem);
         });
