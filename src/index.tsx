@@ -11,6 +11,7 @@ import { LoginForm } from './routes/login/LoginForm';
 import { Index } from './routes/index/index';
 import { UsersList } from './routes/users/UsersList';
 import { UserForm } from './routes/users/UserForm';
+import { ImportForm } from './routes/import/ImportForm';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: 'add-user',
         element: <UserForm />
+      },
+      {
+        path: 'import',
+        element: <ImportForm />
       },
     ]
 

@@ -1,0 +1,22 @@
+.import-items-list {
+    &__row {
+        display: flex;
+    }
+
+    &__row--header {
+        @extend .import-items-list__row;
+        font-weight: bold;
+    }
+
+    &__col {
+        width: 550px;
+
+        &--row-num {
+            width: 50px;
+        }
+
+        &--id {
+            width: 150px;
+        }
+    }
+}

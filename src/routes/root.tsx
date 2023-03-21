@@ -27,6 +27,7 @@ export const Root: React.FC = () => {
                         <>
                             <li><Link to="/users">Users</Link></li>
                             <li><Link to="/add-user">Add User</Link></li>
+                            <li><Link to="/import">Import</Link></li>
                         </>
                     }
                     {
