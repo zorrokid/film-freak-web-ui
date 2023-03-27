@@ -12,6 +12,7 @@ import { Index } from './routes/index/index';
 import { UsersList } from './routes/users/UsersList';
 import { UserForm } from './routes/users/UserForm';
 import { ImportForm } from './routes/import/ImportForm';
+import { ReleasesList } from './routes/releases/ReleasesList';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         path: 'import',
         element: <ImportForm />
       },
+      {
+        path: 'releases',
+        element: <ReleasesList />
+      }
     ]
 
   },
