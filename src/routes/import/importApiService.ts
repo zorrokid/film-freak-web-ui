@@ -2,8 +2,8 @@ import axios from "axios";
 import { ImportItem } from "../../services/imporService";
 
 export interface ImportResponse {
-    importedIds: string[];
-    failedIds: string[];
+    addedIds: string[];
+    updatedIds: string[];
 }
 
 export const doImportAsync = async (importRows: ImportItem[]): Promise<ImportResponse> => {

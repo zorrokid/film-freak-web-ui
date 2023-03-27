@@ -3,13 +3,15 @@ import loginReducer from '../routes/login/loginSlice'
 import usersReducer from '../routes/users/usersSlice'
 import appReducer from './appSlice'
 import importItemsReducer from '../routes/import/importSlice'
+import releasesReducer from '../routes/releases/releasesSlice';
 
 export const store = configureStore({
     reducer: {
         app: appReducer,
         login: loginReducer,
         users: usersReducer,
-        importItems: importItemsReducer
+        importItems: importItemsReducer,
+        releases: releasesReducer
     },
 })
 

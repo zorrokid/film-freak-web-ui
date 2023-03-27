@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LoadingStatus } from "../../models/enums";
 import { ImportItem } from "../../services/imporService";
 import { doImportAsync } from "./importApiService";
 
