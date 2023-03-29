@@ -1,3 +1,11 @@
+import { ImportResponse } from "../routes/import/importApiService";
+
+export enum ImportItemStatus {
+    Pending,
+    Added,
+    Updated
+}
+
 export interface ImportItem {
     externalId: string,
     barcode: string,
@@ -6,6 +14,29 @@ export interface ImportItem {
     mediaType: string,
     releaseCountry: string,
     releaseId: string,
+    status: ImportItemStatus,
+}
+
+export async function importInBatches(
+    importItems: ImportItem[],
+    batchSize: number,
+    importFunction: (importItems: ImportItem[]
+    ) => Promise<ImportResponse>
+) {
+    let index = 0;
+    let addedIds: string[] = [];
+    let updatedIds: string[] = [];
+    while (index < importItems.length) {
+        const batch = importItems.slice(index, index + batchSize);
+        index += batchSize;
+        const result: ImportResponse = await importFunction(batch);
+        addedIds.push(...result.addedIds);
+        updatedIds.push(...result.updatedIds);
+    }
+    return {
+        addedIds,
+        updatedIds
+    };
 }
 
 // TODO: this is custom for now - generalize!
@@ -67,6 +98,7 @@ export function importFromFile(
                 //hasSceneList: fields[30],
                 //hasTwoSidedDisc: fields[31],
                 //hasTwoSidedCover: fields[32],
+                status: ImportItemStatus.Pending
             }
             if (importItem.externalId === "") {
                 console.log('External id missing for row: ', index);
