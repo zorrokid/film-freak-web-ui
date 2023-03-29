@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ImportItem } from "../../services/imporService";
-import { doImportAsync } from "./importApiService";
+import { importInBatches, ImportItem, ImportItemStatus } from "../../services/imporService";
+import { doImportAsync, ImportResponse } from "./importApiService";
 
 export enum ImportStatus {
     idle,
@@ -21,10 +21,25 @@ const initialState: ImportState = {
     errors: [],
 }
 
-export const processImportAsync = createAsyncThunk<unknown, ImportItem[]>(
+export interface ImportItemsModel {
+    importItems: ImportItem[],
+    importInBatches: boolean,
+    batchSize: number
+}
+
+export const processImportAsync = createAsyncThunk<ImportResponse, ImportItemsModel>(
     'import/processImportAsync',
-    async (importItems: ImportItem[], thunkApi) => {
-        await doImportAsync(importItems);
+    async (model: ImportItemsModel, thunkApi) => {
+        const response = await importInBatches(
+            model.importItems,
+            model.importInBatches ? model.batchSize : model.importItems.length,
+            async (importRows: ImportItem[]): Promise<ImportResponse> => {
+                var result = await doImportAsync(importRows);
+                thunkApi.dispatch(updateImportItems(result));
+                return result;
+            }
+        );
+        return response;
     }
 );
 
@@ -34,6 +49,19 @@ export const importSlice = createSlice({
     reducers: {
         addImportItems: (state, action: PayloadAction<ImportItem[]>) => {
             state.importItems = action.payload;
+        },
+        updateImportItems: (state, action: PayloadAction<ImportResponse>) => {
+            const importResponse = action.payload;
+            importResponse.addedIds.forEach(element => {
+                const item = state.importItems.find(ii => ii.externalId === element);
+                if (!item) throw `Item with externalId ${element} not in state!`;
+                item.status = ImportItemStatus.Added;
+            });
+            importResponse.updatedIds.forEach(element => {
+                const item = state.importItems.find(ii => ii.externalId === element);
+                if (!item) throw `Item with externalId ${element} not in state!`;
+                item.status = ImportItemStatus.Updated;
+            });
         }
     },
     extraReducers: (builder) => {
@@ -50,5 +78,5 @@ export const importSlice = createSlice({
     }
 })
 
-export const { addImportItems } = importSlice.actions;
+export const { addImportItems, updateImportItems } = importSlice.actions;
 export default importSlice.reducer;

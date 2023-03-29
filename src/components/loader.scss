@@ -1,0 +1,33 @@
+@import '../styles/variables.scss';
+
+.loader {
+  border: 16px solid $loader-color-background;
+  border-top: 16px solid $loader-color-signal;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+
+  &--small {
+    width: 10px;
+    height: 10px;
+  }
+
+  &--medium {
+    width: 100px;
+    height: 100px;
+  }
+
+  &--small {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,5 +1,5 @@
 import { ImportResponse } from "../routes/import/importApiService";
-import { importInBatches, ImportItem } from "./imporService";
+import { importInBatches, ImportItem, ImportItemStatus } from "./imporService";
 
 function createImportFunction(
     newIds: string[],
@@ -26,7 +26,8 @@ const createImportItems = (
     mediaType: '',
     originalName: '',
     releaseCountry: '',
-    releaseId: ''
+    releaseId: '',
+    status: ImportItemStatus.Pending,
 }));
 
 describe('Tests importInBatches function', () => {
