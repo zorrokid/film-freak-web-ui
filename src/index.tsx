@@ -13,6 +13,7 @@ import { UsersList } from './routes/users/UsersList';
 import { UserForm } from './routes/users/UserForm';
 import { ImportForm } from './routes/import/ImportForm';
 import { ReleasesList } from './routes/releases/ReleasesList';
+import { EditReleasePage } from './routes/editRelease/EditReleasePage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -47,9 +48,12 @@ const router = createBrowserRouter([
       {
         path: 'releases',
         element: <ReleasesList />
+      },
+      {
+        path: 'releases/edit/:id',
+        element: <EditReleasePage />
       }
     ]
-
   },
 ]);
 
