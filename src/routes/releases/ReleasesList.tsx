@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { AppDispatch, RootState } from "../../app/store";
-import { getReleasesAsync, ReleasesStatus } from "./releasesSlice";
+import { AppDispatch, RootState } from "../../state/store";
+import { getReleasesAsync, ReleasesStatus } from "../../state/slices/releasesSlice";
 
 export const ReleasesList: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();

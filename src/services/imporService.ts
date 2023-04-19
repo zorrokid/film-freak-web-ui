@@ -1,4 +1,4 @@
-import { ImportResponse } from "../routes/import/importApiService";
+import { ImportResponse } from "./importApiService";
 
 export enum ImportItemStatus {
     Pending,

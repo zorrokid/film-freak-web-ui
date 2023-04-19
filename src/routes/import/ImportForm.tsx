@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../app/store";
+import { AppDispatch } from "../../state/store";
 import { importFromFile, ImportItem } from "../../services/imporService";
 import { ImportItemsList } from "./ImportItemsList";
-import { addImportItems } from "./importSlice";
+import { addImportItems } from "../../state/slices/importSlice";
 
 const MAX_FILE_SIZE_BYTES = 10000;
 const FILE_MIME_TYPE_CSV = 'text/tab-separated-values';

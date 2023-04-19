@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { importInBatches, ImportItem, ImportItemStatus } from "../../services/imporService";
-import { doImportAsync, ImportResponse } from "./importApiService";
+import { doImportAsync, ImportResponse } from "../../services/importApiService";
 
 export enum ImportStatus {
     idle,

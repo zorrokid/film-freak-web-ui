@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import loginReducer from '../routes/login/loginSlice'
-import usersReducer from '../routes/users/usersSlice'
-import appReducer from './appSlice'
-import importItemsReducer from '../routes/import/importSlice'
-import releasesReducer from '../routes/releases/releasesSlice';
+import loginReducer from './slices/loginSlice'
+import usersReducer from './slices/usersSlice'
+import appReducer from './slices/appSlice'
+import importItemsReducer from './slices/importSlice'
+import releasesReducer from './slices/releasesSlice'
+import editReleaseReducer from './slices/editReleaseSlice'
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
         login: loginReducer,
         users: usersReducer,
         importItems: importItemsReducer,
-        releases: releasesReducer
+        releases: releasesReducer,
+        editRelease: editReleaseReducer,
     },
 })
 

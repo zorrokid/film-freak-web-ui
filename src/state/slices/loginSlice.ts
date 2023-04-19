@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../models/user';
-import { logIn, TokenModel } from './loginService';
+import { logIn, TokenModel } from '../../services/loginService';
 import { getUser } from '../../services/userService';
 import { getValue, storeValue, removeItem } from '../../services/storageService';
 import { JWT_TOKEN_EXPIRATION_KEY, JWT_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../../consts/localStorageKeys';

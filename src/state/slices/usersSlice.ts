@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserAddModel } from "../../models/userAddModel";
 import { LoadingStatus } from "../../models/enums";
-import usersService from "./usersService";
+import usersService from "../../services/usersService";
 import { UserListModel } from "../../models/userListModel";
-import { setRoute } from "../../app/appSlice";
+import { setRoute } from "./appSlice";
 
 export interface UsersState {
     users: UserListModel[];

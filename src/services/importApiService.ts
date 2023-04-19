@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ImportItem } from "../../services/imporService";
+import { ImportItem } from "./imporService";
 
 export interface ImportResponse {
     addedIds: string[];

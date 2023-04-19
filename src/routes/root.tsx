@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
-import { AppDispatch, RootState } from "../app/store";
+import { AppDispatch, RootState } from "../state/store";
 import { UserInfo } from "../components/UserInfo";
-import { getUserAsync } from "./login/loginSlice";
+import { getUserAsync } from "../state/slices/loginSlice";
 
 export const Root: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();

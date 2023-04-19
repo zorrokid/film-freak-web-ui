@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../app/store";
+import { AppDispatch, RootState } from "../../state/store";
 import { Loader, LoaderSizeEnum } from "../../components/Loader";
 import { ImportItem } from "../../services/imporService";
 import './importItemsList.scss';
-import { ImportStatus, processImportAsync } from "./importSlice";
+import { ImportStatus, processImportAsync } from "../../state/slices/importSlice";
 
 
 export const ImportItemsList: React.FC = () => {
