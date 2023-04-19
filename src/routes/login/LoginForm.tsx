@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "../../app/store";
+import { AppDispatch } from "../../state/store";
 import { useRedirect } from "../../hooks/useRedirect";
-import { logInAsync } from "./loginSlice";
+import { logInAsync } from "../../state/slices/loginSlice";
 
 export const LoginForm: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();

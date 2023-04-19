@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ResponseModel } from "../../models/response";
+import { ResponseModel } from "../models/response";
 export interface TokenModel {
     token: string,
     expiration: string,

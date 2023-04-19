@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Release } from "../../models/release";
-import { ReleasesService } from "./releasesService";
+import releasesService from "../../services/releasesService";
 
 export enum ReleasesStatus {
     initial,
@@ -21,7 +21,7 @@ const initialState: ReleasesState = {
 export const getReleasesAsync = createAsyncThunk(
     'releases/getReleasesAsync',
     async () => {
-        const releases = await ReleasesService.getReleasesAsync();
+        const releases = await releasesService.getReleasesAsync();
         return releases;
     }
 )

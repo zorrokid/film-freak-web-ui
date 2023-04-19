@@ -1,7 +1,7 @@
 import axios from "axios";
-import { UserAddModel } from "../../models/userAddModel";
-import { ResponseModel } from "../../models/response";
-import { UserListModel } from "../../models/userListModel";
+import { UserAddModel } from "../models/userAddModel";
+import { ResponseModel } from "../models/response";
+import { UserListModel } from "../models/userListModel";
 
 export interface UsersResponse extends ResponseModel {
     users?: UserListModel[];

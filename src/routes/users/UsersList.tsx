@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../app/store";
+import { AppDispatch, RootState } from "../../state/store";
 import { UserRoleSelect } from "./UserRoleSelect";
-import { deleteUserAsync, getUsersAsync } from "./usersSlice";
+import { deleteUserAsync, getUsersAsync } from "../../state/slices/usersSlice";
 import "./usersList.scss";
 
 export const UsersList: React.FC = () => {

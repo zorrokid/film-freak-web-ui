@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import { store } from './state/store';
 import { initAxios } from './interceptors/jwtInterceptor';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Root } from './routes/root';
@@ -13,6 +13,7 @@ import { UsersList } from './routes/users/UsersList';
 import { UserForm } from './routes/users/UserForm';
 import { ImportForm } from './routes/import/ImportForm';
 import { ReleasesList } from './routes/releases/ReleasesList';
+import { EditReleasePage } from './routes/editRelease/EditReleasePage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -47,9 +48,12 @@ const router = createBrowserRouter([
       {
         path: 'releases',
         element: <ReleasesList />
+      },
+      {
+        path: 'releases/edit/:id',
+        element: <EditReleasePage />
       }
     ]
-
   },
 ]);
 
