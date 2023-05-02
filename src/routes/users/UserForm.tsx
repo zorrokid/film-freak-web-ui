@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from "../../state/store";
 import { useRedirect } from "../../hooks/useRedirect";
 import { UserRoleSelect } from "./UserRoleSelect";
 import { addUserAsync } from "../../state/slices/usersSlice";
+import "./usersForm.scss";
 
 export interface UserFormProps {
     userId?: number;
@@ -34,23 +35,22 @@ export const UserForm: React.FC = (props: UserFormProps) => {
                     {errors.map((err, i) => <li key={`i_${err}`}>{err}</li>)}
                 </ul>
             }
-            <form onSubmit={submit}>
+            <form onSubmit={submit} className="users-form">
+                <label>User role</label>
                 <UserRoleSelect onChange={onSelect} />
-                <label>User name:
-                    <input type="text"
-                        value={userName}
-                        onChange={(event) => setUserName(event.target.value)} />
-                </label>
-                <label>Password:
-                    <input type="password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)} />
-                </label>
-                <label>Email:
-                    <input type="text"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)} />
-                </label>
+                <label>User name</label>
+                <input type="text"
+                    value={userName}
+                    onChange={(event) => setUserName(event.target.value)} />
+                <label>Password</label>
+                <input type="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)} />
+                <label>Email</label>
+                <input type="text"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)} />
+                <div></div>
                 <button type="submit">Submit</button>
             </form>
         </>

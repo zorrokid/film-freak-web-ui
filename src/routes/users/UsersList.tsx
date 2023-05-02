@@ -21,19 +21,22 @@ export const UsersList: React.FC = () => {
         dispatch(deleteUserAsync(userId));
     }
     return (
-        <>
-            <UserRoleSelect selected={role} onChange={onSetRole} />
-            <div className="users-list__container">
+        <div className="users-list">
+            <div className="users-list-filters">
+                <label>Select role</label>
+                <UserRoleSelect selected={role} onChange={onSetRole} />
+            </div>
+            <div className="users-list-data">
                 {
                     users.map((u, i) =>
-                        <div key={u.userId} className="users-list__row">
-                            <span className="users-list__column--name">{u.userName}</span>
+                        <div key={u.userId} className="users-list-data-row">
+                            {u.userName}
                             <button>Edit</button>
                             <button onClick={() => deleteUser(u.userId)}>Delete</button>
                         </div>
                     )
                 }
             </div>
-        </>
+        </div>
     );
 }
