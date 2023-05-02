@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 import { AppDispatch, RootState } from "../state/store";
 import { UserInfo } from "../components/UserInfo";
 import { getUserAsync } from "../state/slices/loginSlice";
+import "./root.scss";
 
 export const Root: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -15,40 +16,42 @@ export const Root: React.FC = () => {
         }
     }, [token, user]);
     return (
-        <>
+        <div className="main-layout">
             <div id="header">
                 <UserInfo />
             </div>
-            <div id="sidebar">
-                <ul>
-                    <li><Link to="/">Index</Link></li>
-                    {
-                        user && user.isAdmin &&
-                        <>
-                            <li><Link to="/users">Users</Link></li>
-                            <li><Link to="/add-user">Add User</Link></li>
-                            <li><Link to="/import">Import</Link></li>
-                        </>
-                    }
-                    {
-                        user &&
-                        <>
-                            <li><Link to="/releases">Releases</Link></li>
-                            <li><Link to="/collection">Collection</Link></li>
-                        </>
-                    }
-                    {
-                        !user &&
-                        <>
-                            <li><Link to="/login">Log In</Link></li>
-                        </>
-                    }
-                </ul>
+            <div className="content-layout">
+                <div id="sidebar">
+                    <ul>
+                        <li><Link to="/">Index</Link></li>
+                        {
+                            user && user.isAdmin &&
+                            <>
+                                <li><Link to="/users">Users</Link></li>
+                                <li><Link to="/add-user">Add User</Link></li>
+                                <li><Link to="/import">Import</Link></li>
+                            </>
+                        }
+                        {
+                            user &&
+                            <>
+                                <li><Link to="/releases">Releases</Link></li>
+                                <li><Link to="/collection">Collection</Link></li>
+                            </>
+                        }
+                        {
+                            !user &&
+                            <>
+                                <li><Link to="/login">Log In</Link></li>
+                            </>
+                        }
+                    </ul>
+                </div>
+                <div id="content">
+                    <Outlet />
+                </div>
             </div>
-            <div id="content">
-                <Outlet />
-            </div>
-        </>
+        </div>
     );
 }
 

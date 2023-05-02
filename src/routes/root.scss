@@ -1,0 +1,16 @@
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+#header {
+    flex-direction: column-reverse;
+    align-self: flex-end;
+}
+
+.content-layout {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
