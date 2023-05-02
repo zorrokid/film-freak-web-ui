@@ -30,7 +30,7 @@ export const UsersList: React.FC = () => {
                 {
                     users.map((u, i) =>
                         <div key={u.userId} className="users-list-data-row">
-                            {u.userName}
+                            <div>{u.userName}</div>
                             <button>Edit</button>
                             <button onClick={() => deleteUser(u.userId)}>Delete</button>
                         </div>
