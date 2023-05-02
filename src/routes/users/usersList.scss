@@ -1,10 +1,31 @@
+@import '../../styles/variables.scss';
+
 .users-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 2 * $gap;
+
+    &-data {
+        display: flex;
+        flex-direction: column;
+        gap: $gap;
+    }
+}
+
+.users-list-filters {
+    display: flex;
+    gap: $gap;
 }
 
 .users-list-data-row {
     display: flex;
-    gap: 5px;
+    gap: $gap;
+
+    :first-child {
+        width: 200px;
+    }
+
+    >* {
+        flex: 0 0 auto;
+    }
 }

@@ -1,6 +1,8 @@
+@import '../../styles/variables.scss';
+
 .users-form {
     display: grid;
     grid-template-columns: 0.5fr 1fr;
-    column-gap: 10px;
-    row-gap: 5px;
+    column-gap: $gap;
+    row-gap: $gap;
 }

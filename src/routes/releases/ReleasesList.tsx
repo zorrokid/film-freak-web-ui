@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../../state/store";
 import { getReleasesAsync, ReleasesStatus } from "../../state/slices/releasesSlice";
+import "./releasesList.scss"
 
 export const ReleasesList: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -12,10 +13,10 @@ export const ReleasesList: React.FC = () => {
     }
 
     return (
-        <ul>
+        <ul className="releases-list">
             {
                 releases.map(r => <li key={r.id}>
-                    {r.title}
+                    <div>{r.title}</div>
                     <Link to={`/releases/edit/${r.id}`}>Edit</Link>
                 </li>)
             }

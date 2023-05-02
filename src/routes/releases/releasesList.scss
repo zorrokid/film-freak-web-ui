@@ -1,0 +1,15 @@
+ul.releases-list {
+    list-style: none;
+
+    li {
+        display: flex;
+
+        :first-child {
+            width: 200px;
+        }
+
+        >* {
+            flex: 0 0 auto;
+        }
+    }
+}
