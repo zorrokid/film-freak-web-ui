@@ -1,15 +1,10 @@
-.users-list__container {
-    width: 80%;
+.users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.users-list {
-    &__row {
-        display: flex;
-    }
-
-    &__column {
-        &--name {
-            width: 100px;
-        }
-    }
+.users-list-data-row {
+    display: flex;
+    gap: 5px;
 }
