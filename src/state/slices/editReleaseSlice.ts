@@ -15,7 +15,7 @@ interface ReleaseEditState {
     status: ReleaseEditStatus;
 }
 
-const initialState = {
+const initialState: ReleaseEditState = {
     release: undefined,
     fileIds: [],
     status: ReleaseEditStatus.initial,
